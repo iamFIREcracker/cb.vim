@@ -43,12 +43,17 @@ function! s:copy(type) abort " {{{
   let @@ = reg_save
 endfunction "}}}
 
-function! s:paste() " {{
+function! s:paste(...) " {{
+  let l:after = get(a:, 1, 1)
   let reg_save = @@
 
   let @@ = system(g:cb_paste_prg)
   setlocal paste
-  exe 'normal p'
+  if l:after
+    exe 'normal p'
+  else
+    exe 'normal P'
+  endif
   setlocal nopaste
 
   let @@ = reg_save
@@ -56,4 +61,5 @@ endfunction " }}}
 
 nnoremap <silent> <Plug>CBCopy :set opfunc=<SID>copy<CR>g@
 xnoremap <silent> <Plug>CBCopy :<C-U>call <SID>copy(visualmode())<CR>
-nnoremap <silent> <Plug>CBPaste :<c-u>call <SID>paste()<CR>
+nnoremap <silent> <Plug>CBPasteAfter :<c-u>call <SID>paste()<CR>
+nnoremap <silent> <Plug>CBPasteBefore :<c-u>call <SID>paste(0)<CR>
