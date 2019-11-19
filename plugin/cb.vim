@@ -43,11 +43,15 @@ function! s:copy(type) abort " {{{
   let @@ = reg_save
 endfunction "}}}
 
-function! s:paste(...) " {{
+function! s:paste(...) " {{{
   let l:after = get(a:, 1, 1)
   let reg_save = @@
 
   let @@ = system(g:cb_paste_prg)
+  " XXX pastin on Windows somehow leaves trailing ^M
+  " gotta figure out a better way to fix this, but
+  " for now, this will don
+  let @@ = substitute(@@, "\r\n", "\n", "g")
   setlocal paste
   if l:after
     exe 'normal p'
