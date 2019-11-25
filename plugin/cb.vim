@@ -48,9 +48,9 @@ function! s:paste(...) " {{{
   let reg_save = @@
 
   let @@ = system(g:cb_paste_prg)
-  " XXX pastin on Windows somehow leaves trailing ^M
-  " gotta figure out a better way to fix this, but
-  " for now, this will don
+  " XXX pasting multi-line text on Windows somehow leaves trailing ^M
+  " on the buffer; I gotta figure out a better way to fix this, but
+  " for now, manually stripping those \r\n will do just fine
   let @@ = substitute(@@, "\r\n", "\n", "g")
   setlocal paste
   if l:after
