@@ -20,7 +20,7 @@ function! s:copyselection(selection) abort "{{{
   if jobid <= 0
     call s:error('Failed to run the following command: ' . string(job_cmd))
   else
-    let ret = async#job#send(jobid, a:selection, 1)
+    let ret = async#job#send(jobid, a:selection, { 'close_stdin': 1 })
     if ret != 0
       call s:error('Failed to send selection the following command: ' . ret)
     endif
