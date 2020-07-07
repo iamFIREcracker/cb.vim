@@ -65,7 +65,7 @@ function! s:paste(...) " {{{
   let @@ = reg_save
 endfunction " }}}
 
-nnoremap <silent> <Plug>CBCopy :set opfunc=<SID>copy<CR>g@
+nnoremap <silent> <Plug>CBCopy :<C-U>set opfunc=<SID>copy<CR>g@
 xnoremap <silent> <Plug>CBCopy :<C-U>call <SID>copy(visualmode())<CR>
-nnoremap <silent> <Plug>CBPasteAfter :<c-u>call <SID>paste()<CR>
-nnoremap <silent> <Plug>CBPasteBefore :<c-u>call <SID>paste(0)<CR>
+nnoremap <silent> <Plug>CBPasteAfter :<C-U>call <SID>paste()<CR>
+nnoremap <silent> <Plug>CBPasteBefore :<C-U>call <SID>paste(0)<CR>
