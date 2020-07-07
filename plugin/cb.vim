@@ -14,7 +14,7 @@ function! s:error(msg) abort "{{{
   echohl ErrorMsg | echomsg 'Clipboard: ' . a:msg | echohl None
 endf "}}}
 
-function! s:copyselection(selection) abort "{{{
+function! cb#copy(selection) abort "{{{
   let job_cmd = [g:cb_copy_prg]
   let jobid = async#job#start(job_cmd, {})
   if jobid <= 0
@@ -27,7 +27,7 @@ function! s:copyselection(selection) abort "{{{
   endif
 endfunction "}}}
 
-function! s:copy(type) abort " {{{
+function! s:copyselection(type) abort " {{{
   let reg_save = @@
 
   if a:type ==# 'v'
@@ -40,7 +40,7 @@ function! s:copy(type) abort " {{{
       silent execute "normal! `[V`]y"
   endif
 
-  call s:copyselection(@@)
+  call cb#copy(@@)
 
   let @@ = reg_save
 endfunction "}}}
@@ -65,7 +65,7 @@ function! s:paste(...) " {{{
   let @@ = reg_save
 endfunction " }}}
 
-nnoremap <silent> <Plug>CBCopy :<C-U>set opfunc=<SID>copy<CR>g@
-xnoremap <silent> <Plug>CBCopy :<C-U>call <SID>copy(visualmode())<CR>
+nnoremap <silent> <Plug>CBCopy :<C-U>set opfunc=<SID>copyselection<CR>g@
+xnoremap <silent> <Plug>CBCopy :<C-U>call <SID>copyselection(visualmode())<CR>
 nnoremap <silent> <Plug>CBPasteAfter :<C-U>call <SID>paste()<CR>
 nnoremap <silent> <Plug>CBPasteBefore :<C-U>call <SID>paste(0)<CR>
