@@ -36,6 +36,8 @@ function! s:copy(type) abort " {{{
       silent execute "normal! `<" . a:type . "`>y"
   elseif a:type ==# 'char'
       silent execute "normal! `[v`]y"
+  elseif a:type ==# 'line'
+      silent execute "normal! `[V`]y"
   endif
 
   call s:copyselection(@@)
